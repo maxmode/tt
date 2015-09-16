@@ -39,4 +39,12 @@ class Parser implements ParserInterface
 
         return $product;
     }
+
+    /**
+     * @return string
+     */
+    public function getItemTagName()
+    {
+        return 'product';
+    }
 }

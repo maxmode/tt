@@ -7,12 +7,6 @@ namespace AppBundle\XmlFeed;
  */
 class Reader
 {
-
-    /**
-     * @var string
-     */
-    protected $itemTagName;
-
     /**
      * @var ParserInterface
      */
@@ -20,12 +14,10 @@ class Reader
 
     /**
      * @param ParserInterface $parser
-     * @param string $itemTagName
      */
-    public function __construct(ParserInterface $parser, $itemTagName)
+    public function __construct(ParserInterface $parser)
     {
         $this->parser = $parser;
-        $this->itemTagName = $itemTagName;
     }
 
     /**
@@ -44,15 +36,15 @@ class Reader
         $items = [];
         $index = 0;
 
-        while ($z->read() && $z->name !== $this->itemTagName) {
+        while ($z->read() && $z->name !== $this->parser->getItemTagName()) {
         }
 
-        while ($z->name === $this->itemTagName)
+        while ($z->name === $this->parser->getItemTagName())
         {
             if ($index >= $offsetItems && ($index < ($limitItems + $offsetItems) || $limitItems == 0 )) {
                 $items[] = $this->parser->parseItem($z->expand());
             }
-            $z->next($this->itemTagName);
+            $z->next($this->parser->getItemTagName());
             if ($index++ % 100 == 0) {
                 gc_collect_cycles();
             }

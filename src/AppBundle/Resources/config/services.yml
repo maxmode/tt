@@ -1,0 +1,10 @@
+services:
+    app.xml_feed.reader.products:
+        class:        '%app.xml_feed.reader.class%'
+        arguments:    ['@app.xml_feed.products.parser']
+    app.xml_feed.products.parser:
+        class:        '%app.xml_feed.products.parser.class%'
+
+parameters:
+    app.xml_feed.reader.class: 'AppBundle\XmlFeed\Reader'
+    app.xml_feed.products.parser.class: 'AppBundle\XmlFeed\Products\Parser'

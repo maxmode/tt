@@ -22,7 +22,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $parser = new Parser();
-        $this->reader = new Reader($parser, 'product');
+        $this->reader = new Reader($parser);
     }
 
     /**
@@ -41,7 +41,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         $totalCount = $this->reader->readXml($url, $items, $offset, $limit);
         $this->assertEquals($expectedTotalCount, $totalCount);
         $this->assertCount($expectedProductCount, $items);
-        $this->assertLessThan($memoryLimit, memory_get_peak_usage());
+        $this->assertLessThan($memoryLimit, memory_get_peak_usage(true));
     }
 
     /**
