@@ -1,0 +1,9 @@
+# XML Feed processor
+app.feed_processor.title: "XML Feed processor"
+app.feed_processor.form.url.label: "XML feed Url"
+app.feed_processor.form.offset.label: "Skip first # products"
+app.feed_processor.form.limit.label: "Show # products"
+app.feed_processor.form.submit: "Parse feed"
+app.feed_processor.products.totalCount: "Total products in feed: "
+app.feed_processor.products.nextPage: "Next page"
+app.feed_processor.products.previousPage: "Previous page"

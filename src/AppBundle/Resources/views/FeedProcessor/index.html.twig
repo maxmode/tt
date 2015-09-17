@@ -1,0 +1,62 @@
+{%  extends 'AppBundle::base.html.twig' %}
+
+{% block title %}
+    {{ 'app.feed_processor.title'|trans }}
+{% endblock %}
+
+{% block body %}
+    <div ng-app="FeedProcessor">
+        <h1>{{ block('title') }}</h1>
+        <div ng-controller="FeedController">
+            <form ng-submit="submit()" id="feed-form">
+                <p>
+                    <label for="url">{{ 'app.feed_processor.form.url.label'|trans }}</label>
+                    <input type="text" id="url" ng-model="url">
+                </p>
+                <p>
+                    <label for="offset">{{ 'app.feed_processor.form.offset.label'|trans }}</label>
+                    <input type="text" id="offset" ng-model="offset">
+                </p>
+                <p>
+                    <label for="limit">{{ 'app.feed_processor.form.limit.label'|trans }}</label>
+                    <input type="text" id="limit" ng-model="limit">
+                </p>
+                <p><input type="submit" value="{{ 'app.feed_processor.form.submit'|trans }}"></p>
+            </form>
+
+            <p ng-show="isFormSubmitted">
+                {{ 'app.feed_processor.products.totalCount'|trans }}<span ng-bind="totalItemsInFeed"></span>
+            </p>
+            {{ block('pagination') }}
+            <div ng-if="isFormSubmitted" ng-repeat="product in products">
+                <div class="product-item">
+                    {% verbatim %}
+                        <div class="product-image-container">
+                            <img ng-src="{{ product.imageURL }}" alt="{{ product.name }}">
+                        </div>
+                        <div class="product-decription-container">
+                            <p class="product-id" ng-bind="product.productID"></p>
+                            <p class="product-title">
+                                <a href="{{ product.productURL }}" ng-bind="product.name"></a>
+                            </p>
+                            <p class="product-price" ng-bind="product.price|currency:product.price_currency"></p>
+                            <p class="product-categories" ng-repeat="category in product.categories">
+                                <span ng-bind="category"></span>
+                            </p>
+                            <p class="product-description" ng-bund="product.description"></p>
+                        </div>
+                    {% endverbatim %}
+                </div>
+            </div>
+            {{ block('pagination') }}
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block pagination %}
+    <a class="page-next" ng-show="isNextPage()" ng-click="nextPage()">
+        {{ 'app.feed_processor.products.nextPage'|trans }}</a>
+    <a class="page-prev" ng-show="isPreviousPage()" ng-click="previousPage()">
+        {{ 'app.feed_processor.products.previousPage'|trans }}</a>
+{% endblock %}

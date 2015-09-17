@@ -17,6 +17,18 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class FeedProcessorController extends Controller
 {
+    /**
+     * Render index page
+     *
+     * @Route("", name="app_feed_processor_index")
+     * @Method("GET")
+     *
+     * @return Response
+     */
+    public function indexAction()
+    {
+        return $this->render('AppBundle:FeedProcessor:index.html.twig');
+    }
 
     /**
      * Fetch products from xml feed

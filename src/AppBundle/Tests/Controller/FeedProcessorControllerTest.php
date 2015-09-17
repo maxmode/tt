@@ -27,7 +27,7 @@ class FeedProcessorControllerTest extends WebTestCase
         $client->request('GET', '/products.json?' . $query);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals('application/json', $client->getResponse()->headers->get('Content-Type'));
+        $this->assertContains('application/json', $client->getResponse()->headers->get('Content-Type'));
         $response = json_decode($client->getResponse()->getContent(), true);
         $this->assertArrayHasKey('products', $response);
         $this->assertCount($expectedProductsCount, $response['products']);
@@ -50,5 +50,19 @@ class FeedProcessorControllerTest extends WebTestCase
                 'expectedTotalSize' => 1000,
             ],
         ];
+    }
+
+    /**
+     * Test for index page
+     */
+    public function testIndexAction()
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertContains('text/html', $client->getResponse()->headers->get('Content-Type'));
+        $this->assertContains('XML Feed processor', $crawler->text());
     }
 }
