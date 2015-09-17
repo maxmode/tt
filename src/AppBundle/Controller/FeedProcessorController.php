@@ -46,6 +46,10 @@ class FeedProcessorController extends Controller
         $limit = $request->get('limit', 100);
         $offset = $request->get('offset', 0);
 
+        if ($limit > 100 || $limit <= 0) {
+            $limit = 100;
+        }
+
         /** @var Reader $feedReader */
         $feedReader = $this->get('app.xml_feed.reader.products');
         $products = [];

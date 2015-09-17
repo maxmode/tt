@@ -5,23 +5,26 @@
 {% endblock %}
 
 {% block body %}
-    <div ng-app="FeedProcessor">
+    <div ng-app="FeedProcessor" class="container">
         <h1>{{ block('title') }}</h1>
         <div ng-controller="FeedController">
             <form ng-submit="submit()" id="feed-form">
-                <p>
-                    <label for="url">{{ 'app.feed_processor.form.url.label'|trans }}</label>
-                    <input type="text" id="url" ng-model="url">
+                <p class="row">
+                    <label class="col-sm-2" for="url">{{ 'app.feed_processor.form.url.label'|trans }}</label>
+                    <input class="col-sm-10" type="text" id="url" ng-model="url">
                 </p>
-                <p>
-                    <label for="offset">{{ 'app.feed_processor.form.offset.label'|trans }}</label>
-                    <input type="text" id="offset" ng-model="offset">
+                <p class="row">
+                    <label class="col-sm-2" for="offset">{{ 'app.feed_processor.form.offset.label'|trans }}</label>
+                    <input class="col-sm-1" type="text" id="offset" ng-model="offset">
                 </p>
-                <p>
-                    <label for="limit">{{ 'app.feed_processor.form.limit.label'|trans }}</label>
-                    <input type="text" id="limit" ng-model="limit">
+                <p class="row">
+                    <label class="col-sm-2" for="limit">{{ 'app.feed_processor.form.limit.label'|trans }}</label>
+                    <input class="col-sm-1" type="text" id="limit" ng-model="limit">
                 </p>
-                <p><input type="submit" value="{{ 'app.feed_processor.form.submit'|trans }}"></p>
+                <p class="row">
+                    <input class="btn-primary col-lg-offset-5 col-sm-2" type="submit"
+                           value="{{ 'app.feed_processor.form.submit'|trans }}">
+                </p>
             </form>
 
             <p ng-show="isFormSubmitted">
@@ -29,24 +32,24 @@
             </p>
             {{ block('pagination') }}
             <div ng-if="isFormSubmitted" ng-repeat="product in products">
-                <div class="product-item">
+                <p class="product-item row">
                     {% verbatim %}
-                        <div class="product-image-container">
-                            <img ng-src="{{ product.imageURL }}" alt="{{ product.name }}">
+                        <div class="product-image-container col-sm-1 col-lg-offset-1">
+                            <img ng-src="{{ product.imageURL }}" alt="{{ product.name }}" class="img-responsive">
                         </div>
-                        <div class="product-decription-container">
-                            <p class="product-id" ng-bind="product.productID"></p>
-                            <p class="product-title">
+                        <div class="product-decription-container col-sm-19">
+                            <div class="product-id" ng-bind="product.productID"></div>
+                            <div class="product-title">
                                 <a href="{{ product.productURL }}" ng-bind="product.name"></a>
-                            </p>
-                            <p class="product-price" ng-bind="product.price|currency:product.price_currency"></p>
-                            <p class="product-categories" ng-repeat="category in product.categories">
-                                <span ng-bind="category"></span>
-                            </p>
-                            <p class="product-description" ng-bund="product.description"></p>
+                            </div>
+                            <div class="product-price" ng-bind="product.price|currency:product.price_currency"></div>
+                            <div class="product-categories" ng-repeat="category in product.categories">
+                                <span ng-bind="category" class="label label-success"></span>
+                            </div>
+                            <div class="product-description" ng-bund="product.description"></div>
                         </div>
                     {% endverbatim %}
-                </div>
+                </p>
             </div>
             {{ block('pagination') }}
 
@@ -55,8 +58,16 @@
 {% endblock %}
 
 {% block pagination %}
-    <a class="page-next" ng-show="isNextPage()" ng-click="nextPage()">
-        {{ 'app.feed_processor.products.nextPage'|trans }}</a>
-    <a class="page-prev" ng-show="isPreviousPage()" ng-click="previousPage()">
-        {{ 'app.feed_processor.products.previousPage'|trans }}</a>
+    <ul class="pager">
+        <li class="previous">
+            <a href="#" ng-show="isPreviousPage()" ng-click="previousPage()">
+                {{ 'app.feed_processor.products.previousPage'|trans }}
+            </a>
+        </li>
+        <li class="next">
+            <a href="#" ng-show="isNextPage()" ng-click="nextPage()">
+                {{ 'app.feed_processor.products.nextPage'|trans }}
+            </a>
+        </li>
+    </ul>
 {% endblock %}

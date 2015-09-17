@@ -46,7 +46,9 @@ class ParserTest extends \PHPUnit_Framework_TestCase
         $xml = <<<'XML'
 <?xml version="1.0" encoding="UTF-8"?>
 <product>
-    <productID>0062-16156</productID> <name>ATTEMA Att Hoofdschakelaar 2p 40A</name> <price currency="EUR">2378.81</price>
+    <productID>0062-16156</productID>
+    <name>ATTEMA Att Hoofdschakelaar 2p 40A</name>
+    <price currency="EUR">2378.81</price>
     <productURL>http://www.hardware.nl/tt/?tt=541_0_1_&amp;r=attema.hardware.nl%2F16 156</productURL>
     <imageURL />
     <description><![CDATA[Att Hoofdschakelaar 2p 40A]]></description>

@@ -10,16 +10,25 @@ angular.module('FeedProcessor', [])
         $scope.isFormSubmitted = false;
 
         $scope.submit = function() {
+            $scope.offset = 0;
+            $scope.getProducts();
+        };
+
+        $scope.getProducts = function() {
+            $scope.isFormSubmitted = false;
+            if ($scope.limit > 100 || $scope.limit <= 0) {
+                $scope.limit = 100;
+            }
             $http.get(Routing.generate('app_feed_processor_products', {
                 xml: $scope.url,
                 offset: $scope.offset,
                 limit: $scope.limit
             }, true))
-                .success(function(response) {
-                    $scope.totalItemsInFeed = response.totalItemsInFeed;
-                    $scope.products = response.products;
-                    $scope.isFormSubmitted = true;
-                });
+            .success(function(response) {
+                $scope.totalItemsInFeed = response.totalItemsInFeed;
+                $scope.products = response.products;
+                $scope.isFormSubmitted = true;
+            });
         };
 
         $scope.isNextPage = function() {
@@ -32,7 +41,7 @@ angular.module('FeedProcessor', [])
             $scope.offset = $scope.offset + $scope.limit;
             $location.hash('feed-form');
             $anchorScroll();
-            $scope.submit();
+            $scope.getProducts();
         };
 
         $scope.isPreviousPage = function() {
@@ -47,6 +56,6 @@ angular.module('FeedProcessor', [])
             }
             $location.hash('feed-form');
             $anchorScroll();
-            $scope.submit();
+            $scope.getProducts();
         };
     });
